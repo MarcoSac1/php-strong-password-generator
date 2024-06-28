@@ -41,7 +41,7 @@ if(isset($_GET['username'])){
     <h1>username needed to Login</h1>
 <?php }?>
 
-<!-- scrivere un foreach su user e controllare se e presente  in form username password
+<!-- scrivere un foreach su $user e controllare se e presente  in form username password
 cercare include per la navbar -->
 
 <!-- <?php foreach($utenti as $user ) {?> -->
