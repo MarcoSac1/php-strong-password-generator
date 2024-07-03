@@ -24,6 +24,11 @@ $utenti =[
 
 session_start();
 
+if(isset($_SESSION['logged']) && $_SESSION['logged'] === true ){
+    header('Location: ./index.php');
+
+}
+
 if(isset($_POST['username']) && isset($_POST['password'])){
 foreach ($utenti as $user){
     if ($user['username'] === $_POST['username']) {
@@ -31,15 +36,12 @@ foreach ($utenti as $user){
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['password'] = $_POST['password'];
             $_SESSION['logged'] = true;
-            header('Location: ./index.php');
-            break;
+    break;
         }
     }
 }
 
-if(!isset($_SESSION['logged'])){
-    echo 'i dati inseriti non sono corretti';
-}
+
 
 }
 
@@ -69,12 +71,15 @@ if(!isset($_SESSION['logged'])){
         </ul>
     </header>
     <main>
-        <form action="./login.php" method="$_POST">
+        <form action="./login.php" method="POST">
             <label for="username">create your username:</label>
             <input type="text" name="username" id="username">
             <label for="password">create your password:</label>
             <input type="text" name="password" id="password">
             <button type="submit">Login</button>
+            <?php if(!isset($_SESSION['logged'])){ ?>
+                <pre>i dati inseriti non sono corretti</pre>
+            <?php } ?>
         </form>
         <ul class="  w-25">
         <?php foreach($utenti as $user ) {?>
