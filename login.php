@@ -21,36 +21,29 @@ $utenti =[
         'password' => 'giumenta'
     ],
 ];
+
 session_start();
 
-var_dump($_SESSION);
+if(isset($_POST['username']) && isset($_POST['password'])){
+foreach ($utenti as $user){
+    if ($user['username'] === $_POST['username']) {
+        if ($user['password'] === $_POST['password']){
+            $_SESSION['username'] = $_POST['username'];
+            $_SESSION['password'] = $_POST['password'];
+            $_SESSION['logged'] = true;
+            header('Location: ./index.php');
+            break;
+        }
+    }
+}
+
+if(!isset($_SESSION['logged'])){
+    echo 'i dati inseriti non sono corretti';
+}
+
+}
+
 ?>
-
-<?php
-
-if(isset($_GET['username'])){
-    $_SESSION['name'] = $_GET['username'];?>
-    <h1>
-        <?php echo 'welcome '. $_SESSION['name']?>
-    </h1>
-<?php } elseif(isset($_SESSION['name'])) {?>
-    <h1>
-        <?php echo 'welcome back '. $_SESSION['name']?>
-    </h1>
-<?php } else{?>
-    <h1>username needed to Login</h1>
-<?php }?>
-
-<!-- scrivere un foreach su $user e controllare se e presente  in form username password
-cercare include per la navbar -->
-
-<!-- <?php foreach($utenti as $user ) {?> -->
-    <?php if(($utenti['username']=== $_GET['username']))?>
-        <!-- <p>: <?php echo $user['username'];?></p> -->
-    
-    
-<!-- <?php }?> --> 
-
 
 
 <!DOCTYPE html>
@@ -76,7 +69,7 @@ cercare include per la navbar -->
         </ul>
     </header>
     <main>
-        <form action="./login.php" method="$_GET">
+        <form action="./login.php" method="$_POST">
             <label for="username">create your username:</label>
             <input type="text" name="username" id="username">
             <label for="password">create your password:</label>
